@@ -111,3 +111,39 @@ orderpaymentmerge['voucher_count'] = orderpaymentmerge['voucher_count'].fillna(0
 
 # Display the final result
 order_payments_df = orderpaymentmerge
+
+#Merging data:
+
+#Merge Customer_df with Orders_df
+customer_orders_df = pd.merge(customers_df, orders_df, on='customer_id', how="inner")
+
+#merge customer, orders df with payment df
+customer_orders_payment_df = pd.merge(customer_orders_df, order_payments_df, on='order_id', how="inner")
+#Ensure that geolocation zipcodes are in customer dataset
+filtered_customer_orders_payment_df = customer_orders_payment_df[customer_orders_payment_df['customer_zip_code_prefix'].isin(geolocation_df['geolocation_zip_code_prefix'])]
+#merge the geolocation-filtered customer + order + payment dataset with reviews
+filtered_customer_orders_payment_reviews_df = pd.merge(filtered_customer_orders_payment_df, order_reviews_df, on='order_id', how="inner")
+
+# Before we merge the rest, merge Product cateogry name translated with Product_df first
+products_df = products_df.merge(
+    product_category_name_translation_df,
+    on='product_category_name',
+    how='left'
+)
+# Replace the original column with the English version
+products_df['product_category_name'] = products_df['product_category_name_english']
+# Drop the now redundant English translation column
+products_df.drop(columns=['product_category_name_english'], inplace=True)
+products_df = products_df[['product_id', 'product_category_name']]
+#merge order items with product id-get product category for order items
+products_order_items_df = order_items_df.merge(products_df, on='product_id', how='left')
+# I want to merge the orders together, though they include different products, so i merged them together.
+products_order_items_df_grouped_Version1 = products_order_items_df.groupby('order_id', as_index=False).agg({
+    'product_category_name': lambda x: ', '.join(sorted(set(x.dropna()))),
+    'price': 'sum',
+    'freight_value': 'sum',
+    'quantity': 'sum'
+})
+
+#merged dataset
+merged_dataset = filtered_customer_orders_payment_reviews_df.merge(products_order_items_df_grouped_Version1, on='order_id', how='inner')
