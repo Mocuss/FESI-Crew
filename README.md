@@ -7,7 +7,5 @@ EGT309 Project <br>
 3. Ryan Yong<br>
 4. Marcus Teo Ming Xuan<br>
 
-NOTE TO ALL PEOPLE:
-geolocation dataset is normal to have duplicates.
-order reviews null values are normal.
-orders_df have been cleaned, anomolies have been deleted, the null values left are normal (check again -matt to future matt)
+<h1>Saved Model</h1> <br>
+https://drive.google.com/drive/folders/1j_Trz1raShsTIUm8q8tP7eEF_3-YtlHa?usp=sharing <br>
