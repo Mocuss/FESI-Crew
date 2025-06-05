@@ -1,0 +1,14 @@
+# Configuration file for dataset paths and model path
+
+data_sources:
+  customers: "/path/to/customers.csv"  # Path to the customers dataset
+  geolocation: "/path/to/geolocation.csv"  # Path to the geolocation dataset
+  order_items: "/path/to/order_items.csv"  # Path to the order items dataset
+  order_payments: "/path/to/order_payments.csv"  # Path to the order payments dataset
+  order_reviews: "/path/to/order_reviews.csv"  # Path to the order reviews dataset
+  orders: "/path/to/orders.csv"  # Path to the orders dataset
+  products: "/path/to/products.csv"  # Path to the products dataset
+  product_category_name_translation: "/path/to/product_category_name_translation.csv"  # Path to the product category name translation dataset
+
+model:
+  path: "/path/to/xgboost_model.joblib"  # Path to the saved model file
