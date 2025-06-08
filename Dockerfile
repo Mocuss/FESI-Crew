@@ -13,10 +13,10 @@ RUN apt-get update && apt-get install -y wget \
     && chmod +x /usr/local/bin/yq
 
 # Install Python dependencies (from requirements.txt)
-RUN pip install --no-cache-dir -r dataprep/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port (optional, if you run a web service)
-# EXPOSE 5000
+EXPOSE 5000
 
 # Command to run the preprocessing script when the container starts
 CMD ["bash", "run.sh"]
