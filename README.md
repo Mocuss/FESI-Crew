@@ -86,10 +86,79 @@ The following are insights found from our Power BI analysis, refer to our dashbo
 
 <hr>
 
-<h1>5.Instructions to run </h1>
-### Step 1: Install dependencies
-pip install -r requirements.txt <br>
+✅ Prerequisites
 
+Ensure the following are installed on your system:
+
+    Docker
+
+    git
+
+    (Optional) dos2unix (if developing on Windows)
+
+📦 1. Clone the Repository
+
+git clone https://github.com/Mocuss/FESI-Crew.git
+cd FESI-Crew
+
+🛠️ 2. Fix run.sh Line Endings (Once Only)
+
+If you cloned the repo on Windows, convert the script to Unix format:
+
+dos2unix run.sh
+chmod +x run.sh
+
+    This prevents command not found: \r errors when running the shell script.
+
+🐳 3. Build the Docker Image
+
+docker build -t fesi-predictor .
+
+This will:
+
+    Install dependencies from requirements.txt
+
+    Copy source code and config files
+
+    Prepare your prediction system
+
+📝 4. Edit config.yaml
+
+Update the file paths in config.yaml to your local CSV data files and model (if needed):
+
+data_sources:
+  customers: "/app/data/olist_customers_dataset.csv"
+  geolocation: "/app/data/olist_geolocation_dataset.csv"
+  ...
+model:
+  path: "/app/saved_model/best_model.pkl"
+
+You can either:
+
+    Edit directly inside your local config.yaml, or
+
+    Enter a running container and modify from inside:
+
+docker run -it fesi-predictor /bin/bash
+nano config.yaml  # or vi
+
+🚀 5. Run the System
+
+Once config.yaml is configured, run the container:
+
+docker run -it fesi-predictor
+
+This will:
+
+    Run run.sh
+
+    Perform preprocessing
+
+    Load the model
+
+    Run prediction
+
+    Print out output to terminal or save it
 
 ### Step 2: Run entire pipeline (requires yq and config.yaml)
 bash run.sh<br>
