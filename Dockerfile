@@ -7,12 +7,14 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+
 # Install system dependencies (including yq for YAML parsing)
 RUN apt-get update && apt-get install -y wget \
     && wget https://github.com/mikefarah/yq/releases/download/v4.10.0/yq_linux_amd64 -O /usr/local/bin/yq \
     && chmod +x /usr/local/bin/yq
 
 # Install Python dependencies (from requirements.txt)
+RUN apt-get update && apt-get install -y nano
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port (optional, if you run a web service)
