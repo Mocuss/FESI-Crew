@@ -55,17 +55,36 @@ Libraries:<br>
 <h2>Data Cleaning</h2>
 We first checked for null and duplicated rows within our datasets. Then, based on olist_datadict.xlsx metadata, we checked and corrected the datasets such that it not only correlates with olist_datadict.xlsx, but also makes merging and future data alterations easy and clear.
 <h2>Feature Engineering</h2>
+Our feature engineering boils down to five core customer signals:
+Recency
+ How recently someone shopped: we calculate the number of days between today (our reference date) and each customer’s most recent purchase. Shorter gaps → more engaged.
+
+
+Frequency
+ How often they buy: we count the distinct orders each customer placed in the six-month window. More orders → higher loyalty.
+
+
+Monetary
+ How much they spend: we sum up their order values (total spend) and divide by order count (average basket size) over that same period. Big spenders and consistent basket sizes are prime targets.
+
+
+Behaviour
+ • Delivery – for each order we flag on-time vs late and measure shipping delay in days, then average per customer to get an on-time ratio and mean/variance of delay.
+ • Reviews – we join in all review scores, then compute each customer’s average rating and review count. Positive feedback and active reviewers tend to return.
+
+
+Target
+ Our binary label: did the customer make more than one purchase? Customers with ≥2 orders are marked “returning,” and that flag is what our model learns to predict.
+
+
+Together, these five signals capture when, how often, how much, how well, and whether again—the exact dimensions needed to spot your next repeat buyer.
 <h2>Insights found</h2>
 The following are insights found from our Power BI analysis, refer to our dashboard and slides for additional information: <br>
 1. Returning customers(0.11 in Q1) are more likely to pay with vouchers as compared to non returning customers (0.05). <br>
 2. Returning customers (Approx. 1.3 in Q1) tend to order more items as compared to non returning customers (Approx. 1.2 in Q1).
 3.Returning customers are slightly more satisfied than non returning customers. 63% of returning voted for 5 star reviews, while only 57% on non-returning
 
-
-
-
 <hr>
-
 
 <h1>5.Instructions to run </h1>
 ### Step 1: Install dependencies
@@ -112,7 +131,7 @@ Weighted Recall: 0.94<br>
 Weighted F1 Score: 0.92<br>
 
 
-From this, we can see that our model can reliably differentiate between returning and non returning customers. <br>
+From this, we can see that our model can reliably differentiate between returning and non returning customers as the accuracy shown above is >90%. <br>
 
 
 <hr>
